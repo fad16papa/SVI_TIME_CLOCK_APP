@@ -27,6 +27,7 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
           width: deviceSize.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TitleMain('SVI Time Clock'),
               InputData('UserName'),
