@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/button_plain.dart';
+import 'package:svi_time_clock_app/widgets/button_text.dart';
 import 'package:svi_time_clock_app/widgets/divider_custom.dart';
 import 'package:svi_time_clock_app/widgets/input_data.dart';
 import 'package:svi_time_clock_app/widgets/input_password_data.dart';
@@ -31,16 +32,19 @@ class LogInPasswordScreen extends StatelessWidget {
                 InputPassword('Password'),
                 ButtonPlain('Log In', () {}),
                 DividerCustom('OR'),
-                ButtonColor('Log In with a Security Key', () {}, _buttonColor),
-                ButtonColor('Log In with Biometrics', () {}, _buttonColor),
-                Text(
-                  'Forgot your password?',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.center,
+                ButtonColor(
+                  'Log In with a Security Key',
+                  () {},
+                  _buttonColor,
+                ),
+                ButtonColor(
+                  'Log In with Biometrics',
+                  () {},
+                  _buttonColor,
+                ),
+                ButtonText(
+                  'Forgot your Password?',
+                  () {},
                 ),
               ],
             ),
