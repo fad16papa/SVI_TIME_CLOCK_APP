@@ -13,17 +13,25 @@ class ButtonPlain extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
-      child: CupertinoButton(
-        disabledColor: CupertinoColors.inactiveGray,
-        borderRadius: BorderRadius.circular(20),
-        child: Text(
-          textButton,
-          style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: Theme.of(context).primaryColor),
+      child: OutlinedButton(
+        style: ElevatedButton.styleFrom(
+          side: BorderSide(width: 2.0, color: Theme.of(context).primaryColor),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
-        onPressed: functionButton,
+        child: CupertinoButton(
+          disabledColor: CupertinoColors.inactiveGray,
+          borderRadius: BorderRadius.circular(20),
+          child: Text(
+            textButton,
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: Theme.of(context).primaryColor),
+          ),
+          onPressed: functionButton,
+        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ class TitleMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.only(bottom: 30),
       padding: EdgeInsets.all(10),
       child: Text(
         titleApp,

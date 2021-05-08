@@ -12,8 +12,9 @@ class InputData extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: TextField(
         decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            hintText: hintTextInput),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          hintText: hintTextInput,
+        ),
       ),
     );
   }

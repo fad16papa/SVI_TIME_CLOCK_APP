@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/button_plain.dart';
 import 'package:svi_time_clock_app/widgets/divider_custom.dart';
@@ -15,8 +14,6 @@ class LogInMainScreen extends StatefulWidget {
 }
 
 class _LogInMainScreenState extends State<LogInMainScreen> {
-  final _form = GlobalKey<FormState>();
-  final _userName = FocusNode();
   final Color _buttonColor = Colors.deepPurpleAccent[400];
 
   @override
