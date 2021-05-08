@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,22 +17,35 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
-    return Container(
-      height: deviceSize.height,
-      width: deviceSize.width,
-      padding: EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            'SVI Time Clock',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              fontSize: 30.0,
+    return CupertinoPageScaffold(
+      child: Container(
+        height: deviceSize.height,
+        width: deviceSize.width,
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              'SVI Time Clock',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontSize: 30,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          )
-        ],
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  hintText: 'UserName'),
+            ),
+            CupertinoButton.filled(
+              borderRadius: BorderRadius.circular(20),
+              child: Text('Log In with a Security Key'),
+              onPressed: () {},
+            )
+          ],
+        ),
       ),
     );
   }

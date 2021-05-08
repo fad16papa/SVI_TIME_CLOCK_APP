@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SVI Time Clock',
       theme: ThemeData(
-        primaryColor: Colors.deepPurple[900],
+        primaryColor: Colors.deepPurple[400],
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
