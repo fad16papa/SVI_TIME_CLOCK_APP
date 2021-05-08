@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:svi_time_clock_app/screens/login_main_screen.dart';
+import 'package:svi_time_clock_app/screens/login_password_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: LogInMainScreen(),
       ),
+      routes: {
+        LogInPasswordScreen.routeName: (ctx) => LogInPasswordScreen(),
+      },
     );
   }
 }
