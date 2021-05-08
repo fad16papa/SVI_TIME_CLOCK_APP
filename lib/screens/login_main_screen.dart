@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:svi_time_clock_app/widgets/button_color.dart';
+import 'package:svi_time_clock_app/widgets/button_plain.dart';
+import 'package:svi_time_clock_app/widgets/divider_custom.dart';
+import 'package:svi_time_clock_app/widgets/input_data.dart';
+import 'package:svi_time_clock_app/widgets/title_main.dart';
 
 class LogInMainScreen extends StatefulWidget {
   static const routeName = '/loing-main';
@@ -12,39 +17,28 @@ class LogInMainScreen extends StatefulWidget {
 class _LogInMainScreenState extends State<LogInMainScreen> {
   final _form = GlobalKey<FormState>();
   final _userName = FocusNode();
+  final Color _buttonColor = Colors.deepPurpleAccent[400];
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
     return CupertinoPageScaffold(
-      child: Container(
-        height: deviceSize.height,
-        width: deviceSize.width,
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'SVI Time Clock',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 30,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  hintText: 'UserName'),
-            ),
-            CupertinoButton.filled(
-              borderRadius: BorderRadius.circular(20),
-              child: Text('Log In with a Security Key'),
-              onPressed: () {},
-            )
-          ],
+      child: GestureDetector(
+        child: Container(
+          height: deviceSize.height,
+          width: deviceSize.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TitleMain('SVI Time Clock'),
+              InputData('UserName'),
+              ButtonColor('Log In with Security Key', () {}, _buttonColor),
+              ButtonColor('Log In with Biometrics', () {}, _buttonColor),
+              DividerCustom('OR'),
+              ButtonPlain('Log In with Password', () {})
+            ],
+          ),
         ),
       ),
     );
