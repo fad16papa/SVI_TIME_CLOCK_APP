@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: LogInMainScreen(),
+          child: Expanded(
+            child: LogInMainScreen(),
+          ),
         ),
       ),
       routes: {
