@@ -11,8 +11,8 @@ class ButtonPlain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       child: OutlinedButton(
         style: ElevatedButton.styleFrom(
           side: BorderSide(width: 2.0, color: Theme.of(context).primaryColor),

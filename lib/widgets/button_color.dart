@@ -12,8 +12,8 @@ class ButtonColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       child: CupertinoButton(
         color: buttonColor,
         borderRadius: BorderRadius.circular(20),

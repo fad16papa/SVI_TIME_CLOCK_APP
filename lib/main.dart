@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.deepPurpleAccent[400],
       ),
       home: Scaffold(
-        body: LogInMainScreen(),
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          child: LogInMainScreen(),
+        ),
       ),
       routes: {
         LogInPasswordScreen.routeName: (ctx) => LogInPasswordScreen(),
