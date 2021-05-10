@@ -18,37 +18,35 @@ class LogInPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Expanded(
-          child: CupertinoPageScaffold(
-            child: GestureDetector(
-              child: Container(
-                height: deviceSize.height,
-                width: deviceSize.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    TitleMain('SVI Time Clock'),
-                    InputData('UserName'),
-                    InputPassword('Password'),
-                    ButtonPlain('Log In', () {}),
-                    DividerCustom('OR'),
-                    ButtonColor(
-                      'Log In with a Security Key',
-                      () {},
-                      _buttonColor,
-                    ),
-                    ButtonColor(
-                      'Log In with Biometrics',
-                      () {},
-                      _buttonColor,
-                    ),
-                    ButtonText(
-                      'Forgot your Password?',
-                      () {},
-                    ),
-                  ],
-                ),
+        child: CupertinoPageScaffold(
+          child: GestureDetector(
+            child: Container(
+              height: deviceSize.height,
+              width: deviceSize.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TitleMain('SVI Time Clock'),
+                  InputData('UserName'),
+                  InputPassword('Password'),
+                  ButtonPlain('Log In', () {}),
+                  DividerCustom('OR'),
+                  ButtonColor(
+                    'Log In with a Security Key',
+                    () {},
+                    _buttonColor,
+                  ),
+                  ButtonColor(
+                    'Log In with Biometrics',
+                    () {},
+                    _buttonColor,
+                  ),
+                  ButtonText(
+                    'Forgot your Password?',
+                    () {},
+                  ),
+                ],
               ),
             ),
           ),
