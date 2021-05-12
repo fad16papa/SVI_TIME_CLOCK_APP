@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/input_data.dart';
 import 'package:svi_time_clock_app/widgets/text_plain.dart';
 import 'package:svi_time_clock_app/widgets/title_main.dart';
@@ -25,7 +26,9 @@ class LoginSecretKeyScreen extends StatelessWidget {
                   TitleMain('SVI Time Clocck'),
                   TextPlain(
                       'Login to your account fadter without entering username and password'),
-                  InputData('Key Display Name'),
+                  InputData('Key Display Name', 10),
+                  ButtonColor('Register New Security Key', () {}, _buttonColor),
+                  ButtonColor('Register Biometrics', () {}, _buttonColor),
                 ],
               ),
             ),

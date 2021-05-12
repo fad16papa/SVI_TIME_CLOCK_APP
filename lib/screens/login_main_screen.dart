@@ -31,7 +31,7 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TitleMain('SVI Time Clock'),
-              InputData('UserName'),
+              InputData('UserName', null),
               ButtonColor('Log In with Security Key', () {}, _buttonColor),
               ButtonColor('Log In with Biometrics', () {}, _buttonColor),
               DividerCustom('OR'),
