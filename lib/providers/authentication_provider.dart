@@ -1,41 +1,62 @@
-import 'package:flutter/services.dart';
+import 'dart:io';
+
+import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 
 class AuthenticationProvider {
-  final _auth = LocalAuthentication();
-
-  Future<bool> hasBiometrics() async {
+  bool isAuth = false;
+  Future<void> checkBiometric() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool canCheckBiometrics = false;
     try {
-      return await _auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      print(e);
-      return false;
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } catch (e) {
+      print("error biome trics $e");
     }
-  }
-
-  Future<List<BiometricType>> getBiometrics() async {
+    print("biometric is available: $canCheckBiometrics");
+    List<BiometricType> availableBiometrics;
     try {
-      return await _auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print(e);
-      return <BiometricType>[];
+      availableBiometrics = await auth.getAvailableBiometrics();
+    } catch (e) {
+      print("error enumerate biometrics $e");
     }
-  }
+    if (Platform.isIOS) {
+      if (availableBiometrics.contains(BiometricType.face)) {
+        // Face ID.
+      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        // Touch ID.
+      }
+    }
+    print("following biometrics are available");
+    if (availableBiometrics.isNotEmpty) {
+      availableBiometrics.forEach((ab) {
+        print("\ttech: $ab");
+      });
+    } else {
+      print("no biometrics are available");
+    }
 
-  Future<bool> authenticate() async {
-    final isAvailable = await hasBiometrics();
-    if (!isAvailable) return false;
+    bool authenticated = false;
 
     try {
-      return await _auth.authenticate(
+      authenticated = await auth.authenticate(
         biometricOnly: true,
-        localizedReason: 'Scan Fingerprint to Authenticate',
+        localizedReason: 'Confirm login with your biometrics',
         useErrorDialogs: true,
-        stickyAuth: true,
+        stickyAuth: false,
+        sensitiveTransaction: true,
+        androidAuthStrings:
+            (AndroidAuthMessages(signInTitle: 'Log in using biometrics')),
+        // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
-    } on PlatformException catch (e) {
-      print(e);
-      return false;
+    } catch (e) {
+      print("error using biometric auth: $e");
     }
+
+    // setState(() {
+    //   isAuth = authenticated ? true : false;
+    // });
+
+    print("authenticated: $authenticated");
   }
 }
