@@ -28,7 +28,7 @@ class LogInPasswordScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TitleMain('SVI Time Clock'),
-                  InputData('UserName'),
+                  InputData('UserName', null),
                   InputPassword('Password'),
                   ButtonPlain('Log In', () {}),
                   DividerCustom('OR'),
