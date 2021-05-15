@@ -18,24 +18,28 @@ class AuthenticationProvider with ChangeNotifier {
     try {
       final response = await http.post(
         url,
-        body: PreAuthenticateModel(
-          svcinfo: Svcinfo(
-              did: 1,
-              protocol: 'FIDO2_0',
-              authtype: 'PASSWORD',
-              svcusername: 'svcfidouser',
-              svcpassword: 'Abcd1234!'),
-          payload: Payload(username: 'johndoe', options: 'direct'),
-        ).toJson(),
+        body: json.encode(
+          PreAuthenticateModel(
+            svcinfo: Svcinfo(
+                did: 1,
+                protocol: 'FIDO2_0',
+                authtype: 'PASSWORD',
+                svcusername: 'svcfidouser',
+                svcpassword: 'Abcd1234!'),
+            payload: Payload(username: 'johndoe', options: 'direct'),
+          ),
+        ),
       );
 
       final responseData = json.decode(response.body);
+      print(responseData);
       if (responseData['code'] != 200) {
         throw HttpException(responseData['code']);
       }
       return PreAuthenticateResponseModel(
         response: Response(
           challenge: responseData['challenge'],
+          allowCredentials: responseData['allowCredentials'],
         ),
       );
     } catch (error) {
@@ -90,6 +94,8 @@ class AuthenticationProvider with ChangeNotifier {
             (AndroidAuthMessages(signInTitle: 'Log in using biometrics')),
         // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
+
+      PreAuthenticateResponseModel responseModel = await preAuthenticated();
     } catch (e) {
       print("error using biometric auth: $e");
     }
