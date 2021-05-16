@@ -14,9 +14,8 @@ class AuthenticationProvider with ChangeNotifier {
 
   String fidoUrl = env['FIDO_URL'];
 
+  //This will call the preauthenticate api to get the challange token from FIDO2
   Future<PreAuthenticateResponseModel> preAuthenticated() async {
-    var client = http.Client();
-
     try {
       var requestBody = new PreAuthenticateModel(
         svcinfo: Svcinfo(
@@ -31,7 +30,7 @@ class AuthenticationProvider with ChangeNotifier {
         ),
       );
 
-      final response = await client.post(
+      final response = await http.post(
         Uri.parse(fidoUrl + '/preauthenticate'),
         headers: {
           'Content-type': 'application/json',
@@ -50,6 +49,29 @@ class AuthenticationProvider with ChangeNotifier {
           allowCredentials: responseData['allowCredentials'],
         ),
       );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //This will call the authenticate api to verify the challenge token from FIDO2
+  Future<String> authenticated() async {
+    try {
+      final response = await http.post(
+        Uri.parse(fidoUrl + '/authenticate'),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: json.encode('test'),
+      );
+
+      final responseData = json.decode(response.body);
+      print(responseData);
+      if (response.reasonPhrase != 'OK') {
+        throw HttpException(responseData['code']);
+      }
+
+      return responseData.toString();
     } catch (error) {
       throw error;
     }
