@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:svi_time_clock_app/providers/authentication_provider.dart';
 import 'package:svi_time_clock_app/screens/login_main_screen.dart';
 import 'package:svi_time_clock_app/screens/login_password_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
-void main() {
+Future<void> main() async {
+  await DotEnv.load(fileName: '.env_prod');
   runApp(MyApp());
 }
 

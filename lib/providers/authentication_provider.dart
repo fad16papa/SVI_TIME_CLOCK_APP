@@ -7,17 +7,18 @@ import 'package:local_auth/local_auth.dart';
 import 'package:svi_time_clock_app/models/preauthenticate_model.dart';
 import 'package:svi_time_clock_app/models/preauthenticate_response_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthenticationProvider with ChangeNotifier {
   bool isAuth = false;
 
-  String fidoUrl = 'https://tna.svi.cloud/skfs/rest';
+  String fidoUrl = env['FIDO_URL'];
 
   Future<PreAuthenticateResponseModel> preAuthenticated() async {
-    Uri url = Uri.parse(fidoUrl + '/preauthenticate');
+    var client = http.Client();
     try {
-      final response = await http.post(
-        url,
+      final response = await client.post(
+        Uri.parse(fidoUrl + '/preauthenticate'),
         body: json.encode(
           PreAuthenticateModel(
             svcinfo: Svcinfo(
