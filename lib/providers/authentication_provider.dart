@@ -16,28 +16,32 @@ class AuthenticationProvider with ChangeNotifier {
 
   Future<PreAuthenticateResponseModel> preAuthenticated() async {
     var client = http.Client();
+
     try {
+      var requestBody = new PreAuthenticateModel(
+        svcinfo: Svcinfo(
+            did: 1,
+            protocol: 'FIDO2_0',
+            authtype: 'PASSWORD',
+            svcusername: 'svcfidouser',
+            svcpassword: 'Abcd1234!'),
+        payload: Payload(
+          username: 'johndoe',
+          options: '{}',
+        ),
+      );
+
       final response = await client.post(
         Uri.parse(fidoUrl + '/preauthenticate'),
-        body: json.encode(
-          PreAuthenticateModel(
-            svcinfo: Svcinfo(
-                did: 1,
-                protocol: 'FIDO2_0',
-                authtype: 'PASSWORD',
-                svcusername: 'svcfidouser',
-                svcpassword: 'Abcd1234!'),
-            payload: Payload(username: 'johndoe', options: 'direct'),
-          ).toJson(),
-        ),
         headers: {
           'Content-type': 'application/json',
         },
+        body: json.encode(requestBody),
       );
 
       final responseData = json.decode(response.body);
       print(responseData);
-      if (responseData['code'] != 200) {
+      if (response.reasonPhrase != 'OK') {
         throw HttpException(responseData['code']);
       }
       return PreAuthenticateResponseModel(
@@ -99,12 +103,17 @@ class AuthenticationProvider with ChangeNotifier {
         // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
 
-      PreAuthenticateResponseModel responseModel = await preAuthenticated();
+      var responseModel = await preAuthenticated();
+
+      print("authenticated: $authenticated");
+
+      if (responseModel.response.allowCredentials == null &&
+          responseModel.response.challenge == null) {
+        return isAuth = authenticated ? true : false;
+      }
     } catch (e) {
       print("error using biometric auth: $e");
     }
-    print("authenticated: $authenticated");
-
     return isAuth = authenticated ? true : false;
   }
 }
