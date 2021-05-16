@@ -28,8 +28,11 @@ class AuthenticationProvider with ChangeNotifier {
                 svcusername: 'svcfidouser',
                 svcpassword: 'Abcd1234!'),
             payload: Payload(username: 'johndoe', options: 'direct'),
-          ),
+          ).toJson(),
         ),
+        headers: {
+          'Content-type': 'application/json',
+        },
       );
 
       final responseData = json.decode(response.body);
