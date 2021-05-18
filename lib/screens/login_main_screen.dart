@@ -29,7 +29,7 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
         await Provider.of<AuthenticationProvider>(context, listen: false)
             .checkBiometric();
 
-    if (!isAuthResult) {
+    if (isAuthResult) {
       if (Platform.isIOS) {
         showDialog(
           context: context,
