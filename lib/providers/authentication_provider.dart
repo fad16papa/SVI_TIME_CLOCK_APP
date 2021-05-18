@@ -131,12 +131,11 @@ class AuthenticationProvider with ChangeNotifier {
 
       if (responseModel.response.allowCredentials == null &&
           responseModel.response.challenge == null) {
-        return isAuth = authenticated ? true : false;
+        return isAuth = false;
       }
     } catch (e) {
       print("error using biometric auth: $e");
     }
-    // return isAuth = authenticated ? true : false;
-    return isAuth = false;
+    return isAuth = authenticated ? true : false;
   }
 }
