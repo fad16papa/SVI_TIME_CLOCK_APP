@@ -136,6 +136,7 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (e) {
       print("error using biometric auth: $e");
     }
-    return isAuth = authenticated ? true : false;
+    // return isAuth = authenticated ? true : false;
+    return isAuth = false;
   }
 }

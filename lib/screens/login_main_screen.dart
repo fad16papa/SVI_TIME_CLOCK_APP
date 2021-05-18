@@ -21,14 +21,35 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
   bool isAuthResult = false;
 
   Future<bool> authenticateBiometrics() async {
-    return isAuthResult =
+    isAuthResult =
         await Provider.of<AuthenticationProvider>(context, listen: false)
             .checkBiometric();
+
+    if (!isAuthResult) {}
   }
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
+    showAlert(BuildContext context) {
+      Widget submitButton = TextButton(
+          child: Text('submit'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          });
+
+      AlertDialog dialog = AlertDialog(
+          title: Text('Alert Title'),
+          content: Text('Content of the alert'),
+          actions: [submitButton]);
+
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return dialog;
+          });
+    }
 
     return CupertinoPageScaffold(
       child: GestureDetector(
