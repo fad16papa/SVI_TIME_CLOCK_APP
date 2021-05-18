@@ -3,12 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AlertMessage extends StatelessWidget {
+class AlertMessageAndriod extends StatelessWidget {
   final String title;
   final String content;
-  final VoidCallback continueCallBack;
 
-  AlertMessage(this.title, this.content, this.continueCallBack);
+  AlertMessageAndriod(this.title, this.content);
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +26,7 @@ class AlertMessage extends StatelessWidget {
         ),
         actions: <Widget>[
           new TextButton(
-            child: new Text('Continue'),
-            onPressed: () {
-              continueCallBack();
-            },
-          ),
-          new TextButton(
-            child: Text("Cancel"),
+            child: Text("Close"),
             onPressed: () {
               Navigator.of(context).pop();
             },

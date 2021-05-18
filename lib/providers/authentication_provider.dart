@@ -125,17 +125,18 @@ class AuthenticationProvider with ChangeNotifier {
         // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
 
-      var responseModel = await preAuthenticated();
+      if (authenticated) {
+        var responseModel = await preAuthenticated();
 
-      print("authenticated: $authenticated");
-
-      if (responseModel.response.allowCredentials == null &&
-          responseModel.response.challenge == null) {
-        return isAuth = false;
+        if (responseModel.response.allowCredentials == null &&
+            responseModel.response.challenge == null) {
+          return isAuth = false;
+        }
       }
     } catch (e) {
       print("error using biometric auth: $e");
     }
+
     return isAuth = authenticated ? true : false;
   }
 }

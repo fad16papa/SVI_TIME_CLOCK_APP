@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:svi_time_clock_app/providers/authentication_provider.dart';
 import 'package:svi_time_clock_app/screens/login_password_screen.dart';
-import 'package:svi_time_clock_app/widgets/alert_message.dart';
+import 'package:svi_time_clock_app/widgets/alert_message_andriod.dart';
+import 'package:svi_time_clock_app/widgets/alert_message_ios.dart';
 import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/button_plain.dart';
 import 'package:svi_time_clock_app/widgets/divider_custom.dart';
@@ -27,19 +30,26 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
             .checkBiometric();
 
     if (!isAuthResult) {
-      VoidCallback continueCallBack = () => {
-            Navigator.of(context).pop(),
-            // code on continue comes here
-          };
-      AlertMessage alert = AlertMessage(
-          "Unable to log in", "<Insert Error Message here>", continueCallBack);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
+      if (Platform.isIOS) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertMessageIOS(
+                "Unable to log in", "<Insert Error Message here>");
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertMessageAndriod(
+                "Unable to log in", "<Insert Error Message here>");
+          },
+        );
+      }
     }
+
+    return isAuthResult;
   }
 
   @override
