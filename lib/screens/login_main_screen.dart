@@ -24,43 +24,52 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
   final Color _buttonColor = Colors.deepPurpleAccent[400];
   bool isAuthResult = false;
 
+  //This will check if the fingerprint scanner, touchID or faceID of the user mobile is enable.
   Future authenticateBiometrics(String userName) async {
     isAuthResult =
         await Provider.of<AuthenticationProvider>(context, listen: false)
             .checkBiometric(userName);
 
-    if (isAuthResult) {
-      var responseModel = await await Provider.of<AuthenticationProvider>(
-              context,
-              listen: false)
-          .preAuthenticated(userName);
-
-      //This will return the showDialog alert box for Unable to login
-      if (responseModel.response.allowCredentials == null &&
-          responseModel.response.challenge == null) {
-        if (Platform.isIOS) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertMessageIOS(
-                  "Unable to log in", "<Insert Error Message here>");
-            },
-          );
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertMessageAndriod(
-                  "Unable to log in", "<Insert Error Message here>");
-            },
-          );
-        }
+    //This will return the showDialog alert box for Unable to login
+    if (!isAuthResult) {
+      if (Platform.isIOS) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertMessageIOS(
+                "Unable to log in", "<Insert Error Message here>");
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertMessageAndriod(
+                "Unable to log in", "<Insert Error Message here>");
+          },
+        );
       }
-
-      //If its successfull request call the authenticate route of FIDO
     }
 
     return isAuthResult;
+  }
+
+  //This will call the preAuthenticate route to FIDO to get the challange token
+  //to authenticate the user.
+  Future preAuthenticateUser(String userName) async {
+    var responseModel =
+        await Provider.of<AuthenticationProvider>(context, listen: false)
+            .preAuthenticated(userName);
+
+    return responseModel;
+  }
+
+  Future authenticateUser() async {
+    var responseModel =
+        await Provider.of<AuthenticationProvider>(context, listen: false)
+            .authenticated();
+
+    return responseModel;
   }
 
   @override
