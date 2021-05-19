@@ -28,48 +28,45 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
   Future authenticateBiometrics(String userName) async {
     isAuthResult =
         await Provider.of<AuthenticationProvider>(context, listen: false)
-            .checkBiometric(userName);
+            .checkBiometric();
 
-    //This will return the showDialog alert box for Unable to login
-    if (!isAuthResult) {
-      if (Platform.isIOS) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertMessageIOS(
-                "Unable to log in", "<Insert Error Message here>");
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertMessageAndriod(
-                "Unable to log in", "<Insert Error Message here>");
-          },
-        );
-      }
+    if (isAuthResult) {
+      //This will call the preAuthenticate route of FIDO2 to get the challange token
+      //to authenticate the user.
+      try {
+        var responsPreAuthenticate =
+            await Provider.of<AuthenticationProvider>(context, listen: false)
+                .preAuthenticated(userName);
+
+        if (responsPreAuthenticate.response.allowCredentials == null &&
+            responsPreAuthenticate.response.challenge == null) {
+          //This will return the showDialog alert box for Unable to login
+          if (Platform.isIOS) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertMessageIOS(
+                    "Unable to log in", "<Insert Error Message here>");
+              },
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertMessageAndriod(
+                    "Unable to log in", "<Insert Error Message here>");
+              },
+            );
+          }
+        }
+      } catch (error) {}
+
+      // var responseAuthenticate =
+      //     await Provider.of<AuthenticationProvider>(context, listen: false)
+      //         .authenticated();
     }
 
     return isAuthResult;
-  }
-
-  //This will call the preAuthenticate route to FIDO to get the challange token
-  //to authenticate the user.
-  Future preAuthenticateUser(String userName) async {
-    var responseModel =
-        await Provider.of<AuthenticationProvider>(context, listen: false)
-            .preAuthenticated(userName);
-
-    return responseModel;
-  }
-
-  Future authenticateUser() async {
-    var responseModel =
-        await Provider.of<AuthenticationProvider>(context, listen: false)
-            .authenticated();
-
-    return responseModel;
   }
 
   @override

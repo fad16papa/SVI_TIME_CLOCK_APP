@@ -27,7 +27,7 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
     Future<bool> authenticateBiometrics(String userName) async {
       return isAuthResult =
           await Provider.of<AuthenticationProvider>(context, listen: false)
-              .checkBiometric(userName);
+              .checkBiometric();
     }
 
     return Scaffold(

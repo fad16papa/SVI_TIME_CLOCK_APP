@@ -77,7 +77,7 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> checkBiometric(String userName) async {
+  Future<bool> checkBiometric() async {
     final LocalAuthentication auth = LocalAuthentication();
     bool canCheckBiometrics = false;
 
@@ -124,15 +124,6 @@ class AuthenticationProvider with ChangeNotifier {
             (AndroidAuthMessages(signInTitle: 'Log in using biometrics')),
         // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
-
-      // if (authenticated) {
-      //   var responseModel = await preAuthenticated(userName);
-
-      //   if (responseModel.response.allowCredentials == null &&
-      //       responseModel.response.challenge == null) {
-      //     return isAuth = false;
-      //   }
-      // }
     } catch (e) {
       print("error using biometric auth: $e");
     }
