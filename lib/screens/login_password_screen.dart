@@ -24,10 +24,10 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
     final deviceSize = MediaQuery.of(context).size;
     bool isAuthResult = false;
 
-    Future<bool> authenticateBiometrics() async {
+    Future<bool> authenticateBiometrics(String userName) async {
       return isAuthResult =
           await Provider.of<AuthenticationProvider>(context, listen: false)
-              .checkBiometric();
+              .checkBiometric(userName);
     }
 
     return Scaffold(
@@ -53,7 +53,7 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                   ),
                   ButtonColor(
                     'Log In with Biometrics',
-                    authenticateBiometrics,
+                    () {},
                     _buttonColor,
                   ),
                   ButtonText(

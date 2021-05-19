@@ -27,7 +27,7 @@ class Response {
   Response.fromJson(Map<String, dynamic> json) {
     challenge = json['challenge'];
     if (json['allowCredentials'] != null) {
-      allowCredentials = new List<AllowCredentials>();
+      allowCredentials = new List<AllowCredentials>.empty();
       json['allowCredentials'].forEach((v) {
         allowCredentials.add(new AllowCredentials.fromJson(v));
       });

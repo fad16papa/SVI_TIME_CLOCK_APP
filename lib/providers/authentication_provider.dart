@@ -77,7 +77,7 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> checkBiometric() async {
+  Future<bool> checkBiometric(String userName) async {
     final LocalAuthentication auth = LocalAuthentication();
     bool canCheckBiometrics = false;
 
@@ -126,7 +126,7 @@ class AuthenticationProvider with ChangeNotifier {
       );
 
       // if (authenticated) {
-      //   var responseModel = await preAuthenticated();
+      //   var responseModel = await preAuthenticated(userName);
 
       //   if (responseModel.response.allowCredentials == null &&
       //       responseModel.response.challenge == null) {

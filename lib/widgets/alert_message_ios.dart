@@ -18,12 +18,12 @@ class AlertMessageIOS extends StatelessWidget {
         title: new Text(
           title,
           style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600, fontSize: 21, color: Colors.black87),
+              fontWeight: FontWeight.w600, fontSize: 18, color: Colors.black87),
         ),
         content: new Text(
           content,
           style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black87),
+              fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black87),
         ),
         actions: <Widget>[
           CupertinoDialogAction(

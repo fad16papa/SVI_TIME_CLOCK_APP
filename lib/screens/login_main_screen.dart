@@ -10,7 +10,6 @@ import 'package:svi_time_clock_app/widgets/alert_message_ios.dart';
 import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/button_plain.dart';
 import 'package:svi_time_clock_app/widgets/divider_custom.dart';
-import 'package:svi_time_clock_app/widgets/input_data.dart';
 import 'package:svi_time_clock_app/widgets/title_main.dart';
 
 class LogInMainScreen extends StatefulWidget {
@@ -21,32 +20,44 @@ class LogInMainScreen extends StatefulWidget {
 }
 
 class _LogInMainScreenState extends State<LogInMainScreen> {
+  final _userNameController = TextEditingController();
   final Color _buttonColor = Colors.deepPurpleAccent[400];
   bool isAuthResult = false;
 
-  Future authenticateBiometrics() async {
+  Future authenticateBiometrics(String userName) async {
     isAuthResult =
         await Provider.of<AuthenticationProvider>(context, listen: false)
-            .checkBiometric();
+            .checkBiometric(userName);
 
     if (isAuthResult) {
-      if (Platform.isIOS) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertMessageIOS(
-                "Unable to log in", "<Insert Error Message here>");
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertMessageAndriod(
-                "Unable to log in", "<Insert Error Message here>");
-          },
-        );
+      var responseModel = await await Provider.of<AuthenticationProvider>(
+              context,
+              listen: false)
+          .preAuthenticated(userName);
+
+      //This will return the showDialog alert box for Unable to login
+      if (responseModel.response.allowCredentials == null &&
+          responseModel.response.challenge == null) {
+        if (Platform.isIOS) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertMessageIOS(
+                  "Unable to log in", "<Insert Error Message here>");
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertMessageAndriod(
+                  "Unable to log in", "<Insert Error Message here>");
+            },
+          );
+        }
       }
+
+      //If its successfull request call the authenticate route of FIDO
     }
 
     return isAuthResult;
@@ -66,12 +77,33 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TitleMain('SVI Time Clock'),
-              InputData('UserName', null),
+              Container(
+                margin: EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: _userNameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: 'UserName',
+                  ),
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus();
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please provide your username';
+                    }
+                    return null;
+                  },
+                ),
+              ),
               ButtonColor('Log In with Security Key', () {}, _buttonColor),
               ButtonColor(
                 'Log In with Biometrics',
                 () {
-                  authenticateBiometrics();
+                  authenticateBiometrics(_userNameController.text);
                 },
                 _buttonColor,
               ),
