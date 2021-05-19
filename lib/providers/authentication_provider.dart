@@ -15,7 +15,7 @@ class AuthenticationProvider with ChangeNotifier {
   String fidoUrl = env['FIDO_URL'];
 
   //This will call the preauthenticate api to get the challange token from FIDO2
-  Future<PreAuthenticateResponseModel> preAuthenticated() async {
+  Future<PreAuthenticateResponseModel> preAuthenticated(String userName) async {
     try {
       var requestBody = new PreAuthenticateModel(
         svcinfo: Svcinfo(
@@ -25,7 +25,7 @@ class AuthenticationProvider with ChangeNotifier {
             svcusername: 'svcfidouser',
             svcpassword: 'Abcd1234!'),
         payload: Payload(
-          username: 'johndoe',
+          username: userName,
           options: '{}',
         ),
       );
@@ -125,14 +125,14 @@ class AuthenticationProvider with ChangeNotifier {
         // androidAuthStrings:AndroidAuthMessages(signInTitle: "Login to HomePage")
       );
 
-      if (authenticated) {
-        var responseModel = await preAuthenticated();
+      // if (authenticated) {
+      //   var responseModel = await preAuthenticated();
 
-        if (responseModel.response.allowCredentials == null &&
-            responseModel.response.challenge == null) {
-          return isAuth = false;
-        }
-      }
+      //   if (responseModel.response.allowCredentials == null &&
+      //       responseModel.response.challenge == null) {
+      //     return isAuth = false;
+      //   }
+      // }
     } catch (e) {
       print("error using biometric auth: $e");
     }
