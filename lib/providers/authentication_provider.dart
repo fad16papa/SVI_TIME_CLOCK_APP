@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:svi_time_clock_app/models/authenticate_manual.dart';
 import 'package:svi_time_clock_app/models/preauthenticate_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,7 @@ class AuthenticationProvider with ChangeNotifier {
   bool isAuth = false;
 
   String fidoUrl = env['FIDO_URL'];
+  String sviUrl = env['SVI_URL'];
 
   //This will call the preauthenticate api to get the challange token from FIDO2
   Future preAuthenticated(String userName) async {
@@ -70,6 +72,24 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  //This will call the simple route to manual login user via username and password
+  Future manualAuthenticateUser(String userName, String password) async {
+    try {
+      var requestBody = new ManualAuthenticate(userName, password);
+
+      final response = await http.post(
+        Uri.parse(sviUrl + '/users/access/simple'),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: json.encode(requestBody),
+      );
+      final responseData = json.decode(response.body);
+
+      return responseData;
+    } catch (error) {}
   }
 
   Future<bool> checkBiometric() async {
