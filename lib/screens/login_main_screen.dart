@@ -62,9 +62,9 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
 
         //This will call the authenticate route of FIDO2 to verify the challange token
         //to authenticate the user.
-        var responseAuthenticate =
-            await Provider.of<AuthenticationProvider>(context, listen: false)
-                .authenticated();
+        // var responseAuthenticate =
+        //     await Provider.of<AuthenticationProvider>(context, listen: false)
+        //         .authenticated();
       } catch (error) {}
     }
 
@@ -89,6 +89,7 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.always,
                   controller: _userNameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(

@@ -6,7 +6,6 @@ import 'package:svi_time_clock_app/widgets/button_color.dart';
 import 'package:svi_time_clock_app/widgets/button_plain.dart';
 import 'package:svi_time_clock_app/widgets/button_text.dart';
 import 'package:svi_time_clock_app/widgets/divider_custom.dart';
-import 'package:svi_time_clock_app/widgets/input_data.dart';
 import 'package:svi_time_clock_app/widgets/input_password_data.dart';
 import 'package:svi_time_clock_app/widgets/title_main.dart';
 
@@ -21,7 +20,6 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final _userNameController = TextEditingController();
-    final _passwordController = TextEditingController();
     final Color _buttonColor = Colors.deepPurpleAccent[400];
     final deviceSize = MediaQuery.of(context).size;
     bool isAuthResult = false;

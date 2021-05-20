@@ -59,18 +59,24 @@ class Svcinfo {
 class Payload {
   String username;
   String options;
+  String displayName;
+  String extensions;
 
-  Payload({this.username, this.options});
+  Payload({this.username, this.options, this.displayName, this.extensions});
 
   Payload.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     options = json['options'];
+    displayName = json['displayName'];
+    extensions = json['extensions'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['username'] = this.username;
     data['options'] = this.options;
+    data['displayName'] = this.displayName;
+    data['extensions'] = this.extensions;
     return data;
   }
 }
