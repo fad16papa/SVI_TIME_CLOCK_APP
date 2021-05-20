@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:svi_time_clock_app/models/preauthenticate_model.dart';
-import 'package:svi_time_clock_app/models/preauthenticate_response_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,7 +14,7 @@ class AuthenticationProvider with ChangeNotifier {
   String fidoUrl = env['FIDO_URL'];
 
   //This will call the preauthenticate api to get the challange token from FIDO2
-  Future<PreAuthenticateResponseModel> preAuthenticated(String userName) async {
+  Future preAuthenticated(String userName) async {
     try {
       var requestBody = new PreAuthenticateModel(
         svcinfo: Svcinfo(
@@ -39,16 +38,12 @@ class AuthenticationProvider with ChangeNotifier {
       );
 
       final responseData = json.decode(response.body);
-      print(responseData);
+
       if (response.reasonPhrase != 'OK') {
         throw HttpException(responseData['code']);
       }
-      return PreAuthenticateResponseModel(
-        response: Response(
-          challenge: responseData['challenge'],
-          allowCredentials: responseData['allowCredentials'],
-        ),
-      );
+
+      return responseData;
     } catch (error) {
       throw error;
     }

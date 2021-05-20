@@ -59,11 +59,13 @@ class _LogInMainScreenState extends State<LogInMainScreen> {
             );
           }
         }
-      } catch (error) {}
 
-      // var responseAuthenticate =
-      //     await Provider.of<AuthenticationProvider>(context, listen: false)
-      //         .authenticated();
+        //This will call the authenticate route of FIDO2 to verify the challange token
+        //to authenticate the user.
+        var responseAuthenticate =
+            await Provider.of<AuthenticationProvider>(context, listen: false)
+                .authenticated();
+      } catch (error) {}
     }
 
     return isAuthResult;
