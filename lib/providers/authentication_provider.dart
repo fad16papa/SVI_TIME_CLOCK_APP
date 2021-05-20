@@ -92,6 +92,7 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (error) {}
   }
 
+  //This will check the if the fingerprint scanner, toudhID or faceID of the device is enabled.
   Future<bool> checkBiometric() async {
     final LocalAuthentication auth = LocalAuthentication();
     bool canCheckBiometrics = false;

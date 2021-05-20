@@ -20,6 +20,8 @@ class LogInPasswordScreen extends StatefulWidget {
 class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
   @override
   Widget build(BuildContext context) {
+    final _userNameController = TextEditingController();
+    final _passwordController = TextEditingController();
     final Color _buttonColor = Colors.deepPurpleAccent[400];
     final deviceSize = MediaQuery.of(context).size;
     bool isAuthResult = false;
@@ -42,7 +44,28 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TitleMain('SVI Time Clock'),
-                  InputData('UserName', null),
+                  Container(
+                    margin: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(5),
+                    child: TextFormField(
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: 'UserName',
+                      ),
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus();
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please provide your username';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
                   InputPassword('Password'),
                   ButtonPlain('Log In', () {}),
                   DividerCustom('OR'),
